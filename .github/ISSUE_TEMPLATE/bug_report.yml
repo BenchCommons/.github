@@ -1,0 +1,22 @@
+name: Bug report
+description: Something is broken or measured incorrectly.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: The observed behavior versus what you expected. Include exact error output.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: Commands, versions (pinned image or tool version) and environment (OS, CPU, bare metal or VM).
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
