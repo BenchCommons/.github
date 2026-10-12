@@ -28,7 +28,7 @@ Open benchmarks, methodologies and tools. Every benchmark here is reproducible: 
 | [tools-dataset](https://github.com/BenchCommons/tools-dataset) | Builds, validates and exports the datasets as pinned, checksummed inputs. |
 | [tools-commons](https://github.com/BenchCommons/tools-commons) | Shared libraries and utilities used by the tools: contract checkers and common CLI helpers. |
 
-**Sites**: [website](https://github.com/BenchCommons/website) (benchmark results) and [perfratio-website](https://github.com/BenchCommons/perfratio-website).
+**Sites**: [website-results](https://github.com/BenchCommons/website-results) (benchmark results) and [website-perfratio](https://github.com/BenchCommons/website-perfratio).
 
 **Governance**:
 - [.github](https://github.com/BenchCommons/.github): community files, templates, shared workflows and the AI agent rules.
