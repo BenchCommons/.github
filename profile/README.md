@@ -19,13 +19,14 @@ Open benchmarks, methodologies and tools. Every benchmark here is reproducible: 
 | [dataset-names](https://github.com/BenchCommons/dataset-names) | Given names and surnames worldwide, with country, frequency, gender and script, from openly licensed official sources. |
 | [dataset-commons](https://github.com/BenchCommons/dataset-commons) | Small shared datasets (texts, graphs, numbers) used by several catalogs. |
 
-**Tools**
+**Tools** (`tools-*`, plus perfratio)
 
 | Repository | What it is |
 |---|---|
-| [benchmark-tool](https://github.com/BenchCommons/benchmark-tool) | Builds each catalog implementation in Docker, runs it and records reproducible results. Today it runs **SSGBerk**, the static site generator benchmark. |
+| [tools-benchmark](https://github.com/BenchCommons/tools-benchmark) | Builds each catalog implementation in Docker, runs it and records reproducible results. Today it runs **SSGBerk**, the static site generator benchmark. |
 | [perfratio](https://github.com/BenchCommons/perfratio) | A command-line benchmarking tool in Rust, built on hyperfine. It measures time, CPU, peak memory and RAPL energy, with in-depth statistics. |
-| [dataset-tool](https://github.com/BenchCommons/dataset-tool) | Builds, validates and exports the datasets as pinned, checksummed inputs. |
+| [tools-dataset](https://github.com/BenchCommons/tools-dataset) | Builds, validates and exports the datasets as pinned, checksummed inputs. |
+| [tools-commons](https://github.com/BenchCommons/tools-commons) | Shared libraries and utilities used by the tools: contract checkers and common CLI helpers. |
 
 **Sites**: [website](https://github.com/BenchCommons/website) (benchmark results) and [perfratio-website](https://github.com/BenchCommons/perfratio-website).
 
@@ -36,13 +37,13 @@ Open benchmarks, methodologies and tools. Every benchmark here is reproducible: 
 ## Run a benchmark
 
 ```sh
-git clone --recurse-submodules https://github.com/BenchCommons/benchmark-tool.git
-cd benchmark-tool
+git clone --recurse-submodules https://github.com/BenchCommons/tools-benchmark.git
+cd tools-benchmark
 ./ssgberk --test hugo -nf 50          # one generator, 50 pages
 ./ssgberk --suite P --quality         # the small suite with the output audit
 ```
 
-The methodology, suites and results format are specified in [`benchmark-tool/docs/specs`](https://github.com/BenchCommons/benchmark-tool/tree/master/docs/specs).
+The methodology, suites and results format are specified in [`tools-benchmark/docs/specs`](https://github.com/BenchCommons/tools-benchmark/tree/master/docs/specs).
 
 ## Contributing
 
