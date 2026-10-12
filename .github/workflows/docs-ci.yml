@@ -1,0 +1,91 @@
+# Reusable CI for BenchCommons docs and governance repos (ADR 0002 in .product).
+# Call it from a repo with:
+#   jobs:
+#     docs:
+#       uses: BenchCommons/.github/.github/workflows/docs-ci.yml@main
+name: Docs CI
+
+on:
+  workflow_call:
+    inputs:
+      require-agents-md:
+        description: Fail when AGENTS.md is missing
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  structure:
+    name: Structure, specs and ADRs
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PyYAML
+        run: python3 -m pip install --quiet pyyaml==6.0.2
+      - name: Check repository structure
+        env:
+          REQUIRE_AGENTS_MD: ${{ inputs.require-agents-md }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, sys
+          import yaml
+
+          errors = []
+          for name in ["README.md"] + (["AGENTS.md"] if os.environ["REQUIRE_AGENTS_MD"] == "true" else []):
+              if not os.path.isfile(name):
+                  errors.append(f"missing {name}")
+
+          # docs/specs/<NNN>-<feature>/ must contain spec.md, plan.md and tasks.md.
+          specs = "docs/specs"
+          if os.path.isdir(specs):
+              for entry in sorted(os.listdir(specs)):
+                  path = os.path.join(specs, entry)
+                  if os.path.isdir(path) and re.match(r"^\d{3}-[a-z0-9-]+$", entry):
+                      for f in ("spec.md", "plan.md", "tasks.md"):
+                          if not os.path.isfile(os.path.join(path, f)):
+                              errors.append(f"{path}: missing {f}")
+                  elif os.path.isdir(path):
+                      errors.append(f"{path}: spec folders must be named NNN-kebab-case")
+
+          # docs/adr/NNNN-title.md must state its status.
+          adr = "docs/adr"
+          if os.path.isdir(adr):
+              for entry in sorted(os.listdir(adr)):
+                  if not entry.endswith(".md"):
+                      continue
+                  path = os.path.join(adr, entry)
+                  if not re.match(r"^\d{4}-[a-z0-9-]+\.md$", entry):
+                      errors.append(f"{path}: ADR files must be named NNNN-kebab-case.md")
+                  elif "## Status" not in open(path, encoding="utf-8").read():
+                      errors.append(f"{path}: missing '## Status' section")
+
+          # Every JSON and YAML file must parse.
+          for root, dirs, files in os.walk("."):
+              dirs[:] = [d for d in dirs if d not in (".git", "node_modules")]
+              for f in files:
+                  path = os.path.join(root, f)
+                  try:
+                      if f.endswith(".json"):
+                          json.load(open(path, encoding="utf-8"))
+                      elif f.endswith((".yml", ".yaml")):
+                          list(yaml.safe_load_all(open(path, encoding="utf-8")))
+                  except Exception as exc:
+                      errors.append(f"{path}: invalid {f.rsplit('.', 1)[1]}: {exc}")
+
+          for e in errors:
+              print(f"::error::{e}")
+          print(f"{len(errors)} problem(s)")
+          sys.exit(1 if errors else 0)
+          PY
+
+  links:
+    name: Relative links
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --offline --no-progress --include-fragments=false './**/*.md'
+          fail: true

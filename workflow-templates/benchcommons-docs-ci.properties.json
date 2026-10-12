@@ -1,0 +1,6 @@
+{
+  "name": "BenchCommons docs CI",
+  "description": "Checks README/AGENTS.md, docs/specs and docs/adr structure, JSON/YAML syntax and relative Markdown links.",
+  "iconName": "octicon book",
+  "categories": ["Markdown"]
+}

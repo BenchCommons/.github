@@ -1,0 +1,13 @@
+name: CI
+
+on:
+  push:
+    branches: [$default-branch]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  docs:
+    uses: BenchCommons/.github/.github/workflows/docs-ci.yml@main
