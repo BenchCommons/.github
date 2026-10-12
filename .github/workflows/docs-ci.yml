@@ -17,9 +17,9 @@ on:
         type: string
         default: "."
       link-globs:
-        description: Space-separated globs of Markdown files whose relative links are checked
+        description: Space-separated, single-quoted globs of Markdown files whose relative links are checked
         type: string
-        default: "./**/*.md"
+        default: "'./**/*.md'"
 
 permissions:
   contents: read
