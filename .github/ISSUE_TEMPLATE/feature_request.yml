@@ -1,0 +1,21 @@
+name: Feature or change
+description: Propose a feature, a new implementation or dataset, or a change to a contract.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and motivation
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What should change. If it affects another repo's contract, link the owner's spec (see .product/CONTRACTS.md).
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria

@@ -1,15 +1,37 @@
-# Benchmarks Commons
+# BenchCommons
 
-Open benchmarks, methodologies and tools for the web. Every benchmark here is reproducible: the code, the inputs, the pinned versions and the raw results are public.
+Open benchmarks, methodologies and tools. Every benchmark here is reproducible: the code, the inputs, the pinned versions and the raw results are public.
 
-## Projects
+## Repositories by role
+
+**Catalogs** (`catalog-*`): the implementations that are measured.
 
 | Repository | What it is |
 |---|---|
-| [benchmark-tool](https://github.com/BenchCommons/benchmark-tool) | The toolset behind **SSGBerk**, the static site generator benchmark. It builds the same reference site with every generator in Docker, times cold builds, and records wall time, CPU, peak RSS and output size. It also audits the output with Lighthouse, axe, html-validate and lychee. Suites P, M, G and GG cover 50 to 100,000 pages. |
-| [ssg-frameworks](https://github.com/BenchCommons/ssg-frameworks) | The generators SSGBerk measures: 63 static site generators in 20 languages. Each one has a pinned Dockerfile, a canonical `build.sh`, the reference site and its metadata in `generators.json`. |
-| [perfratio](https://github.com/BenchCommons/perfratio) | A command-line benchmarking tool in Rust, built on hyperfine. It adds hardware performance counters, RAPL energy (joules and watts), peak memory and bootstrapped confidence intervals. |
-| [professor-website-exemple](https://github.com/BenchCommons/professor-website-exemple) | A Jekyll example site: a multilingual CV for a fictional professor. |
+| [catalog-ssg](https://github.com/BenchCommons/catalog-ssg) | 63 static site generators in 20 languages. Each one has a pinned Dockerfile, a canonical `build.sh`, the reference site and metadata in `generators.json`. |
+| [catalog-algorithms](https://github.com/BenchCommons/catalog-algorithms) | Classic algorithms implemented in hundreds of languages. It started as Hello World in 452 languages, and 83% of them are run in CI. |
+| [catalog-web-frameworks](https://github.com/BenchCommons/catalog-web-frameworks) | Web framework implementations. It continues the archived TechEmpower Framework Benchmarks. |
+
+**Datasets** (`dataset-*`): inputs for the benchmarks.
+
+| Repository | What it is |
+|---|---|
+| [dataset-names](https://github.com/BenchCommons/dataset-names) | Given names and surnames worldwide, with country, frequency, gender and script, from openly licensed official sources. |
+| [dataset-commons](https://github.com/BenchCommons/dataset-commons) | Small shared datasets (texts, graphs, numbers) used by several catalogs. |
+
+**Tools**
+
+| Repository | What it is |
+|---|---|
+| [benchmark-tool](https://github.com/BenchCommons/benchmark-tool) | Builds each catalog implementation in Docker, runs it and records reproducible results. Today it runs **SSGBerk**, the static site generator benchmark. |
+| [perfratio](https://github.com/BenchCommons/perfratio) | A command-line benchmarking tool in Rust, built on hyperfine. It measures time, CPU, peak memory and RAPL energy, with in-depth statistics. |
+| [dataset-tool](https://github.com/BenchCommons/dataset-tool) | Builds, validates and exports the datasets as pinned, checksummed inputs. |
+
+**Sites**: [website](https://github.com/BenchCommons/website) (benchmark results) and [perfratio-website](https://github.com/BenchCommons/perfratio-website).
+
+**Governance**:
+- [.github](https://github.com/BenchCommons/.github): community files, templates, shared workflows and the AI agent rules.
+- [.product](https://github.com/BenchCommons/.product): roadmap, cross-repo decisions and contracts.
 
 ## Run a benchmark
 
@@ -20,8 +42,8 @@ cd benchmark-tool
 ./ssgberk --suite P --quality         # the small suite with the output audit
 ```
 
-The methodology, the suites and the results format are specified in [`benchmark-tool/docs/specs`](https://github.com/BenchCommons/benchmark-tool/tree/master/docs/specs). Results of each round are in [`docs/results`](https://github.com/BenchCommons/benchmark-tool/tree/master/docs/results).
+The methodology, suites and results format are specified in [`benchmark-tool/docs/specs`](https://github.com/BenchCommons/benchmark-tool/tree/master/docs/specs).
 
 ## Contributing
 
-To add a generator, follow [How to add a generator](https://github.com/BenchCommons/ssg-frameworks#how-to-add-a-generator). Issues and pull requests are welcome in each repository.
+Read [CONTRIBUTING](https://github.com/BenchCommons/.github/blob/main/CONTRIBUTING.md). To add a generator, follow [How to add a generator](https://github.com/BenchCommons/catalog-ssg#how-to-add-a-generator). Issues and pull requests are welcome in each repository.
